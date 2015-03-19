@@ -11,6 +11,9 @@ if ((sys.platform == "openbsd4" and os.uname()[-1] == "i386")
     or ("SunOS" in platform.platform() and platform.machine() == "sun4v")):
     os.environ["CFLAGS"] = ("%s %s" % (os.environ.get("CFLAGS", ""), "-Os")).lstrip()
 
+# Turn off all optimizations on greenlet due to Cyan Bug 5928
+os.environ["CFLAGS"] = ("%s %s" % (os.environ.get("CFLAGS", ""), "-O0")).lstrip()
+
 try:
     if not (sys.modules.get("setuptools")
             or "develop" in sys.argv
